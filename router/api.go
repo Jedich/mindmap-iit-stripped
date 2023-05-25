@@ -2,6 +2,7 @@ package router
 
 import (
 	"fmt"
+	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/fluent/fluent-logger-golang/fluent"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -30,6 +31,10 @@ func (r *Router) Register() {
 	r.App.Use(logger.New())
 	log := NewFluentLogger()
 	r.App.Use(fluentdMiddleware(log))
+
+	prometheus := fiberprometheus.New("mindmap")
+	prometheus.RegisterAt(r.App, "/metrics")
+	r.App.Use(prometheus.Middleware)
 
 	// Routes, unrestricted access
 	r.App.Get("/ping", func(c *fiber.Ctx) error {
