@@ -1,0 +1,17 @@
+
+# Configuration vars for cmd/app
+[app]
+name = "mindmap"
+port = ":3000"
+idle-timeout = 5 # As seconds
+print-routes = false
+prefork = false
+production = false
+
+[db]
+driver = "mysql"
+
+[db.mysql]
+dsn = "root:11@tcp(localhost:6603)/mindmap-db?parseTime=true" # <username>:<password>@tcp(<host>:<port>)/<database>
+
+[middleware]
